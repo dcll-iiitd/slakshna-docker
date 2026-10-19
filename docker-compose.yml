@@ -1,6 +1,6 @@
 services:
   slakshna-node:
-    image: ghcr.io/himanshu4nagdev/slakshna:latest
+    image: ghcr.io/distributed-computing-and-learning-lab/slakshna:latest
     container_name: slakshna-node
     init: true
     restart: unless-stopped
