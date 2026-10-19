@@ -23,7 +23,7 @@ Run one SLAKSHNA federated-learning node in Docker. Several nodes (on one machin
 ## 1. Setup
 
 ```bash
-git clone https://github.com/AnantJainn/slakshna-dockerize.git
+https://github.com/dcll-iiitd/slakshna-docker.git
 cd slakshna-dockerize
 
 docker pull ghcr.io/distributed-computing-and-learning-lab/slakshna:latest   # download the image (~12 GB); public, no login needed
