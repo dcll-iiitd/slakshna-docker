@@ -26,7 +26,7 @@ Run one SLAKSHNA federated-learning node in Docker. Several nodes (on one machin
 git clone https://github.com/AnantJainn/slakshna-dockerize.git
 cd slakshna-dockerize
 
-docker pull ghcr.io/himanshu4nagdev/slakshna:latest   # download the image (~12 GB); if denied: docker login ghcr.io
+docker pull ghcr.io/distributed-computing-and-learning-lab/slakshna:latest   # download the image (~12 GB); public, no login needed
 docker volume create slakshna-hf                       # cache for the model download (reused across restarts)
 chmod 777 logs                                         # the container writes logs as a different user
 df -h / /var/lib/docker                                # check there is enough free space
