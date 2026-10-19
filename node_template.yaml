@@ -1,0 +1,62 @@
+federated:
+  mode: "finetuning"
+  optimizer: "muon"
+  trust_beta: 0.1
+  total_epochs: 8
+
+plugins:
+  optimizers: []
+
+model:
+  name: "allenai/OLMo-2-1124-7B"
+  dtype: "bfloat16"
+  trust_remote_code: true
+  use_liger_kernel: false
+
+data:
+  name: "local"
+  train_path: "/data/South_Asia.jsonl"
+  tokenized_path: "dummy"
+  seq_len: 2048
+  pack_sequences: true
+  format: "chatml"
+  max_train_samples: 1000
+
+lora:
+  enabled: true
+  rank: 16
+  alpha: 64
+  dropout: 0.03
+  target_modules: ["q_proj", "v_proj"]
+
+training:
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 3e-4
+  warmup_steps: 0
+  max_steps: 16
+  save_strategy: "steps"
+  save_steps: 5
+  save_total_limit: 5
+  optimizer:
+    backend: "default"
+    kwargs:
+      optim_bits: 8
+  distributed:
+    strategy: "fsdp"
+    fsdp:
+      param_dtype: "auto"
+      reduce_dtype: "auto"
+      buffer_dtype: "auto"
+      shard_experts_individually: true
+      activation_checkpointing: true
+      transformer_layer_cls: []
+
+checkpoint:
+  save_directory: "dummy"
+  local_interval: 1
+  sync_interval: 1
+  retention: 1
+
+logging:
+  tracker: "none"

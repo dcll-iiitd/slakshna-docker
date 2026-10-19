@@ -1,0 +1,35 @@
+services:
+  slakshna-node:
+    image: ghcr.io/himanshu4nagdev/slakshna:latest
+    container_name: slakshna-node
+    init: true
+    restart: unless-stopped
+    network_mode: host
+    shm_size: 16g
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ./node.toml:/app/config.toml:ro
+      - ./node_template.yaml:/app/node_template.yaml:ro
+      - ./data:/data:ro
+      - ./logs:/app/logs
+      - slakshna-node-data:/app/node-data
+      - slakshna-models:/app/ml_models
+      - slakshna-states:/app/ml_states
+      - slakshna-work:/app/data
+      - slakshna-cache:/app/cache
+      - slakshna-hf:/app/hf_cache
+
+volumes:
+  slakshna-node-data:
+  slakshna-models:
+  slakshna-states:
+  slakshna-work:
+  slakshna-cache:
+  slakshna-hf:

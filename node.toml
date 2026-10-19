@@ -1,0 +1,43 @@
+# Node configuration. Mounted into the container as /app/config.toml.
+
+[federation]
+id = "client-trial-1"            # must be IDENTICAL on every node in the federation
+name = "SLAKSHNA Federation"
+
+[training]                       # keep identical on every node
+epoch_duration_secs = 600
+sync_deadline_secs = 300
+expected_peers = 1               # how many other nodes to wait for
+
+[compression]                    # keep identical on every node
+enabled = true
+sparsity = 0.1
+quantization = "symmetric_int8"
+allow_legacy_delta_format = false
+max_payload_bytes = 2000000000
+max_tensor_elements = 2000000000
+
+[node]
+id = "client-node-1"             # must be UNIQUE per node (e.g. client-node-2 on the second machine)
+data_dir = "./node-data"
+gpu_id = 0
+num_gpus = 1
+
+[network]
+host = "0.0.0.0"
+p2p_port = 9000                  # open TCP + UDP on the firewall / router
+ws_port = 8546
+api_port = 8545
+# Leave empty on the first node. On every other node put the first node's join string,
+# printed in its log as "Any peer can join this federation with: peers = [...]".
+# Across different networks use "<endpoint_id>@<public_ip>:9000".
+peers = []
+
+[discovery]
+mdns = true                      # finds peers on the same LAN only
+dht = true
+dns = true
+relay = false                    # set true if nodes cannot reach each other directly
+
+[logging]
+level = "info"
